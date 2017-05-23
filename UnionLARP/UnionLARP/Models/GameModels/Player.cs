@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace UnionLARP.Models.GameModels
 {
@@ -9,7 +8,7 @@ namespace UnionLARP.Models.GameModels
         public string Id { get; set; }
         [Required]
         public string Name { get; set; }
-        [DefaultValue("Player")]
+        [Required]
         public string RefLevel { get; set; }
     }
 }

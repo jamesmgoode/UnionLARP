@@ -260,3 +260,4 @@ paket-files/
 __pycache__/
 *.pyc
 /UnionLARP/UnionLARP/appsettings.json
+/UnionLARP/UnionLARP/Secrets.cs

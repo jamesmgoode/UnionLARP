@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -14,7 +12,6 @@ using UnionLARP.Models.AccountViewModels;
 using UnionLARP.Services;
 using UnionLARP.Models.GameModels;
 using UnionLARP.Data;
-using Microsoft.EntityFrameworkCore;
 
 namespace UnionLARP.Controllers
 {
@@ -123,7 +120,7 @@ namespace UnionLARP.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await _context.Players.AddAsync(new Player { Id = user.Id, Name = user.UserName });
+                    await _context.Players.AddAsync(new Player { Id = user.Id, Name = user.UserName, RefLevel = "Player" });
                     await _context.SaveChangesAsync();
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
