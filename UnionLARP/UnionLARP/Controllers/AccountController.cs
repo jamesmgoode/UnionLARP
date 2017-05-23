@@ -13,6 +13,8 @@ using UnionLARP.Models;
 using UnionLARP.Models.AccountViewModels;
 using UnionLARP.Services;
 using UnionLARP.Models.GameModels;
+using UnionLARP.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace UnionLARP.Controllers
 {
@@ -26,13 +28,16 @@ namespace UnionLARP.Controllers
         private readonly ILogger _logger;
         private readonly string _externalCookieScheme;
 
+        private readonly ApplicationDbContext _context;
+
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IOptions<IdentityCookieOptions> identityCookieOptions,
             IEmailSender emailSender,
             ISmsSender smsSender,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -40,6 +45,7 @@ namespace UnionLARP.Controllers
             _emailSender = emailSender;
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<AccountController>();
+            _context = context;
         }
 
         //
@@ -117,9 +123,8 @@ namespace UnionLARP.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    var gameContext = new GameContext();
-                    await gameContext.Players.AddAsync(new Player { Id = user.Id, Name = user.UserName });
-                    await gameContext.SaveChangesAsync();
+                    await _context.Players.AddAsync(new Player { Id = user.Id, Name = user.UserName });
+                    await _context.SaveChangesAsync();
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
                     // Send an email with this link
