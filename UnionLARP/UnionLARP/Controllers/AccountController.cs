@@ -157,8 +157,9 @@ namespace UnionLARP.Controllers
                 // If the user does not have an account, then ask the user to create an account.
                 ViewData["ReturnUrl"] = returnUrl;
                 ViewData["LoginProvider"] = info.LoginProvider;
+                var playerName = info.Principal.FindFirstValue(ClaimTypes.Name);
                 var email = info.Principal.FindFirstValue(ClaimTypes.Email);
-                return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email });
+                return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email, PlayerName = playerName });
             }
         }
 
@@ -181,6 +182,10 @@ namespace UnionLARP.Controllers
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
+                    var player = new Player { Id = user.Id, Name = model.PlayerName, RefLevel = "Player" };
+                    await _context.Players.AddAsync(player);
+                    await _context.SaveChangesAsync();
+
                     result = await _userManager.AddLoginAsync(user, info);
                     if (result.Succeeded)
                     {
