@@ -2,12 +2,12 @@
 
 namespace UnionLARP.Models.GameModels
 {
-    public class Player
+    public class SpecialPower
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]
-        public string RefLevel { get; set; }
+        public string Text { get; set; }
     }
 }
