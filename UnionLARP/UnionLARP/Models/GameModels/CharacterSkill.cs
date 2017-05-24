@@ -2,12 +2,12 @@
 
 namespace UnionLARP.Models.GameModels
 {
-    public class Skill
+    public class CharacterSkill
     {
         public int Id { get; set; }
         [Required]
-        public string Name { get; set; }
+        public int CharacterId { get; set; }
         [Required]
-        public string Description { get; set; }
+        public int SkillId { get; set; }
     }
 }

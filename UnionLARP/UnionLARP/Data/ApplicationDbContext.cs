@@ -20,6 +20,11 @@ namespace UnionLARP.Data
             // Add your customizations after calling base.OnModelCreating(builder);
         }
 
+        public DbSet<GameStat> GameStats { get; set; }
         public DbSet<Player> Players { get; set; }
+        public DbSet<Character> Characters { get; set; }
+        public DbSet<Skill> Skills { get; set; }
+        public DbSet<CharacterSkill> CharacterSkills { get; set; }
+        public DbSet<SkillHierarchy> SkillHierarchies { get; set; }
     }
 }
